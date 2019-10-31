@@ -1,0 +1,97 @@
+name: Ignite 2019 CICD
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    
+    # checkout code from repo
+    - name: Checkout code
+      uses: actions/checkout@v1
+      
+    # setup nuget
+    - name: Setup nuget
+      uses: warrenbuckley/Setup-Nuget@v1
+      
+    # restore packages from nuget
+    - name: Restore packages with nuget
+     run: nuget restore ./Source/Tailwind.Traders.Web.sln
+    
+    # setup msbuild and put it in the path
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+      
+    # build solution
+    - name: Build solution
+      run: msbuild ./Source/Tailwind.Traders.Web.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:SkipInvalidConfigurations=true /p:platform="Any CPU" /p:configuration="Release" /p:VisualStudioVersion="16.0" /p:publishUrl="%GITHUB_WORKSPACE%\staging
+    
+    # upload build artifact
+    - name: Publish build artifacts back to GitHub
+      uses: actions/upload-artifact@master
+      with:
+        name: webapp
+        path: staging
+
+  provisionAndConfigure:
+    runs-on: windows-latest
+    steps:
+      # checkout code from repo
+      - name: Checkout code
+        uses: actions/checkout@v1
+        
+      # provision and configure infrastructure using a powershel script with Azure CLI
+      - name: Provision infrastructure
+        env:
+          SERVICE_PRINCIPAL: http://AbelDeployDemoPrincipal
+          SERVICE_PRINCIPAL_TENANT: 72f988bf-86f1-41af-91ab-2d7cd011db47
+          RESOURCE_GROUP: TailwindTraders-Web-Ignite-RG
+          RESOURCE_GROUP_REGION: southcentralus
+          WEB_APP_NAME: abeltailwindtraders
+          APP_SERVICE_REGION: southcentralus
+          APP_SERVICE_SKU: P3V2 
+          API_URL: https://backend.tailwindtraders.com/webbff/v1
+          API_URL_SHOPPING_CART: https://backend.tailwindtraders.com/cart-api
+          CLOUDFLARE_ZONE: d1132c2a5c07edec69da294bd17adb33
+          CLOUDFLARE_ID: 15cc0ef41e07ee95b5e3ff18ca72c770
+          DNS_NAME: www.abeltailwindtraders.com
+          CLOUDFLARE_EMAIL: abel.wang@gmail.com
+          NAKED_DNS: abeltailwindtraders.com
+          PFX: ${{ secrets.PFX }}
+        run: >
+          powershell -command "& ./Deploy/AzCLI/provisionWebApp.ps1 "
+          -servicePrincipal %SERVICE_PRINCIPAL% 
+          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+          -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
+          -resourceGroupName %RESOURCE_GROUP% 
+          -resourceGroupNameRegion %RESOURCE_GROUP_REGION% 
+          -webAppName %WEB_APP_NAME% 
+          -appServiceRegion %APP_SERVICE_REGION%
+          -appServiceSKU %APP_SERVICE_SKU%
+          -apiUrl %API_URL% 
+          -apiUrlShoppingCart %API_URL_SHOPPING_CART% 
+          -cloudFlareZone %CLOUDFLARE_ZONE% 
+          -dnsName %DNS_NAME% 
+          -cloudFlareKey ${{ secrets.CLOUDFLARE_API_KEY }} 
+          -cloudFlareEmail %CLOUDFLARE_EMAIL%
+          -nakedDns %NAKED_DNS% 
+
+  deploy:
+    needs: [build, provisionAndConfigure] 
+    runs-on: windows-latest
+    steps:
+      
+      # download build artifacts
+      - name: Download build artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: webapp
+
+      # deploy web app
+      - uses: azure/webapps-deploy@v1
+        with: 
+          app-name: abeltailwindtraders
+          publish-profile: ${{ secrets.WEBSITE_PUBLISH_PROFILE }}
+          working-directory: Source\Tailwind.Traders.Web
+          package: webapp\Tailwind.Traders.Web
