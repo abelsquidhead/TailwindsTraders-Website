@@ -116,4 +116,4 @@ jobs:
           -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
           -resourceGroupName %RESOURCE_GROUP% 
           -webAppName %WEB_APP_NAME% 
-          -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP% 
+          -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP%
