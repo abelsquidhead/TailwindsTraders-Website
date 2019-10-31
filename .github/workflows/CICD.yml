@@ -66,7 +66,7 @@ jobs:
         run: >
           powershell -command "& ./Deploy/AzCLI/provisionWebApp.ps1 "
           -servicePrincipal %SERVICE_PRINCIPAL% 
-          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET2 }} 
+          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
           -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
           -resourceGroupName %RESOURCE_GROUP% 
           -resourceGroupNameRegion %RESOURCE_GROUP_REGION% 
@@ -112,7 +112,7 @@ jobs:
         run: >
           powershell -command "& ./webapp/deployWebApp.ps1 "
           -servicePrincipal %SERVICE_PRINCIPAL% 
-          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET2 }} 
+          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
           -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
           -resourceGroupName %RESOURCE_GROUP% 
           -webAppName %WEB_APP_NAME% 
