@@ -57,7 +57,7 @@ jobs:
           APP_SERVICE_SKU: P3V2 
           API_URL: https://backend.tailwindtraders.com/webbff/v1
           API_URL_SHOPPING_CART: https://backend.tailwindtraders.com/cart-api
-          CLOUDFLARE_ZONE: d1132c2a5c07edec69da294bd17adb33
+          CLOUDFLARE_ZONE: ff8c819eca8fbc4895f58dba7e0fe6ab
           CLOUDFLARE_ID: 15cc0ef41e07ee95b5e3ff18ca72c770
           DNS_NAME: www.abeltailwindstraders.com
           CLOUDFLARE_EMAIL: abel.wang@gmail.com

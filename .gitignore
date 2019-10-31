@@ -336,6 +336,5 @@ Deploy/helm/__values/*
 !Deploy/helm/__values/readme.txt
 
 # ignite smoke and mirrors
-.github/workflows/CICD.yml
 .github/workflows/BuildAndDeploy.yml
 .github/BuildAndDeploy.yml
