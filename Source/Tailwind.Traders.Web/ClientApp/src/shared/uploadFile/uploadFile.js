@@ -73,4 +73,4 @@ class UploadFile extends Component {
 
 const mapStateToProps = state => state.login;
 
-export default connect(mapStateToProps)(withRouter(UploadFile));
+export default connect(mapStateToProps)(withRouter(UploadFile));  
