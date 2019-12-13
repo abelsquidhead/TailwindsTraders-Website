@@ -338,3 +338,4 @@ Deploy/helm/__values/*
 # ignite smoke and mirrors
 .github/workflows/BuildAndDeploy.yml
 .github/BuildAndDeploy.yml
+.github/workflows/CICD.yml
