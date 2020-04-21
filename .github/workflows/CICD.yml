@@ -7,6 +7,10 @@ jobs:
     runs-on: windows-latest
     steps:
     
+    - name: test action
+      uses: actions/checkout@v1
+          
+    
     # checkout code from repo
     - name: Checkout code
       uses: actions/checkout@v1
@@ -30,6 +34,7 @@ jobs:
         pwd
         echo ls
         ls
+         
 
     # upload build artifact
     - name: Publish build artifacts back to GitHub
