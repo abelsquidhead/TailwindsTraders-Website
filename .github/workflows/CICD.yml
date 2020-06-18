@@ -94,6 +94,8 @@ jobs:
 
       - name: show webapp directory
         run: |
+          echo ls
+          ls
           echo cd webapp
           cd webapp
           echo pwd
