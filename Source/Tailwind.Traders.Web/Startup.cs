@@ -16,6 +16,9 @@ namespace Tailwind.Traders.Web
         {
             Configuration = configuration;
             Logger = logger;
+
+// added a comment
+// added another comment
         }
 
         public IConfiguration Configuration { get; }
