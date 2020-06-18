@@ -96,12 +96,6 @@ jobs:
         run: |
           echo ls
           ls
-          echo cd webapp
-          cd webapp
-          echo pwd
-          pwd
-          echo ls
-          ls
           
       # deploy web app
       - name: Deploy web app
@@ -110,9 +104,9 @@ jobs:
           SERVICE_PRINCIPAL_TENANT: 72f988bf-86f1-41af-91ab-2d7cd011db47
           RESOURCE_GROUP: TailwindTraders-Web-Ignite-RG
           WEB_APP_NAME: abeltailwindstraders
-          PATH_TO_WEBSITE_ZIP: .\webapp\Tailwind.Traders.web.zip
+          PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
         run: >
-          powershell -command "& ./webapp/deployWebApp.ps1 "
+          powershell -command "& ./deployWebApp.ps1 "
           -servicePrincipal %SERVICE_PRINCIPAL% 
           -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
           -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
