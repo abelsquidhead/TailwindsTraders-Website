@@ -19,6 +19,7 @@ namespace Tailwind.Traders.Web
 
 // added a comment
 // added another comment
+// made some changes
         }
 
         public IConfiguration Configuration { get; }
