@@ -9,3 +9,4 @@ jobs:
       uses: abelsquidhead/ADOELPCustomAction-CreateAzDWorkItem@master
       with:
         myInput: "This is my input!!!"
+        myToken: ${{ secrets.GITHUB_TOKEN }}
