@@ -1,0 +1,11 @@
+name: Test dacpac deploy task
+on: [push]
+jobs:
+  # run the dacpac-deploy action
+  testAction:
+    runs-on: windows-latest
+    steps:
+    - name: test my action
+      uses: abelsquidhead/ADOELPCustomAction-CreateAzDWorkItem@master
+      with:
+        myInput: "This is my input!!!"
