@@ -1,0 +1,16 @@
+
+name: PR Workflow
+
+on: [pull_request]
+
+jobs:
+  ttPRProcess:
+    runs-on: ubuntu-latest
+    name: My Test Pull Request Job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: echo some values
+        run: >
+          ls
