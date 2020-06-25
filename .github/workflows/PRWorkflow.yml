@@ -72,7 +72,7 @@ jobs:
           WEB_APP_NAME: abeltailwindstraders
           PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
         run: |
-          az login --servicePrincipal --username ${ SERVICE_PRINCIPAL } --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT% 
+          az login --servicePrincipal --username ${{ SERVICE_PRINCIPAL }} --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT% 
 
         # run: >
         #   powershell -command "& ./deployWebApp.ps1 "
