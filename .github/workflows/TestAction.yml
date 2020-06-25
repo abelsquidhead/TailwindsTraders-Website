@@ -1,0 +1,81 @@
+name: Tailwind Traders PR Workflow
+on: [pull_request]
+jobs:
+  # run the dacpac-deploy action
+  createPRWorkItemInAzD:
+    runs-on: windows-latest
+    steps:
+    - name: Create PR Work Item
+      uses: abelsquidhead/ADOELPCustomAction-CreateAzDWorkItem@master
+      with:
+        myInput: "This is my input!!!"
+        myToken: ${{ secrets.GITHUB_TOKEN }}
+  
+  build:
+      runs-on: windows-latest
+      steps:
+      
+      # checkout code from repo
+      - name: Checkout code
+        uses: actions/checkout@v1
+        
+      # setup nuget
+      - name: Setup nuget
+        uses: warrenbuckley/Setup-Nuget@v1
+        
+      # copy zip to staging
+      - name: Build solution
+        run: |
+          mkdir staging
+          copy .\Deploy\Tailwind.Traders.web.zip .\staging
+          copy .\Deploy\AzCLI\deployWebApp.ps1 .\staging
+
+      - name: show staging
+        run: |
+          echo cd staging
+          cd staging
+          echo pwd
+          pwd
+          echo ls
+          ls
+
+      # upload build artifact
+      - name: Publish build artifacts back to GitHub
+        uses: actions/upload-artifact@master
+        with:
+          name: webapp
+          path: staging
+
+
+  deploy:
+    needs: [build] 
+    runs-on: windows-latest
+    steps:
+      
+      # download build artifacts
+      - name: Download build artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: webapp
+
+      - name: show webapp directory
+        run: |
+          echo ls
+          ls
+          
+      deploy web app
+      - name: Deploy web app to correct slot
+        env:
+          SERVICE_PRINCIPAL: http://AbelDeployDemoBackupPrincipal
+          SERVICE_PRINCIPAL_TENANT: 72f988bf-86f1-41af-91ab-2d7cd011db47
+          RESOURCE_GROUP: TailwindTraders-Web-Ignite-RG
+          WEB_APP_NAME: abeltailwindstraders
+          PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
+        run: >
+          powershell -command "& ./deployWebApp.ps1 "
+          -servicePrincipal %SERVICE_PRINCIPAL% 
+          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+          -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
+          -resourceGroupName %RESOURCE_GROUP% 
+          -webAppName %WEB_APP_NAME% 
+          -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP% 

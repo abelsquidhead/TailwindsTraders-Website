@@ -45,5 +45,5 @@ Write-Output ""
 #region Deploy Web App
 # Deploy Web App
 #
-az webapp deployment source config-zip -g $resourceGroupName -n $webAppName --src $pathToWebsiteZip
+az webapp deployment source config-zip -g $resourceGroupName -n $webAppName --src $pathToWebsiteZip --slot staging
 #endregion
