@@ -1,7 +1,7 @@
 name: Tailwind Traders PR Workflow
 on: [pull_request]
 jobs:
-  run the dacpac-deploy action
+
   createPRWorkItemInAzD:
     runs-on: windows-latest
     steps:
@@ -47,7 +47,7 @@ jobs:
           path: staging
 
 
-  deploy:
+  deployToStaging:
     # needs: [build] 
     runs-on: windows-latest
     steps:
