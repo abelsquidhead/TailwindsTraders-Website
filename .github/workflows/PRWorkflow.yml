@@ -1,50 +1,50 @@
 name: Tailwind Traders PR Workflow
 on: [pull_request]
 jobs:
-  # run the dacpac-deploy action
-  # createPRWorkItemInAzD:
-  #   runs-on: windows-latest
-  #   steps:
-  #   - name: Create PR Work Item
-  #     uses: abelsquidhead/ADOELPCustomAction-CreateAzDWorkItem@master
-  #     with:
-  #       myInput: "This is my input!!!"
-  #       myToken: ${{ secrets.GITHUB_TOKEN }}
+  run the dacpac-deploy action
+  createPRWorkItemInAzD:
+    runs-on: windows-latest
+    steps:
+    - name: Create PR Work Item
+      uses: abelsquidhead/ADOELPCustomAction-CreateAzDWorkItem@master
+      with:
+        myInput: "This is my input!!!"
+        myToken: ${{ secrets.GITHUB_TOKEN }}
   
-  # build:
-  #     runs-on: windows-latest
-  #     steps:
+  build:
+      runs-on: windows-latest
+      steps:
       
-  #     # checkout code from repo
-  #     - name: Checkout code
-  #       uses: actions/checkout@v1
+      # checkout code from repo
+      - name: Checkout code
+        uses: actions/checkout@v1
         
-  #     # setup nuget
-  #     - name: Setup nuget
-  #       uses: warrenbuckley/Setup-Nuget@v1
+      # setup nuget
+      - name: Setup nuget
+        uses: warrenbuckley/Setup-Nuget@v1
         
-  #     # copy zip to staging
-  #     - name: Build solution
-  #       run: |
-  #         mkdir staging
-  #         copy .\Deploy\Tailwind.Traders.web.zip .\staging
-  #         copy .\Deploy\AzCLI\deployWebApp.ps1 .\staging
+      # copy zip to staging
+      - name: Build solution
+        run: |
+          mkdir staging
+          copy .\Deploy\Tailwind.Traders.web.zip .\staging
+          copy .\Deploy\AzCLI\deployWebApp.ps1 .\staging
 
-  #     - name: show staging
-  #       run: |
-  #         echo cd staging
-  #         cd staging
-  #         echo pwd
-  #         pwd
-  #         echo ls
-  #         ls
+      - name: show staging
+        run: |
+          echo cd staging
+          cd staging
+          echo pwd
+          pwd
+          echo ls
+          ls
 
-  #     # upload build artifact
-  #     - name: Publish build artifacts back to GitHub
-  #       uses: actions/upload-artifact@master
-  #       with:
-  #         name: webapp
-  #         path: staging
+      # upload build artifact
+      - name: Publish build artifacts back to GitHub
+        uses: actions/upload-artifact@master
+        with:
+          name: webapp
+          path: staging
 
 
   deploy:
@@ -52,16 +52,16 @@ jobs:
     runs-on: windows-latest
     steps:
       
-      # # download build artifacts
-      # - name: Download build artifacts
-      #   uses: actions/download-artifact@master
-      #   with:
-      #     name: webapp
+      # download build artifacts
+      - name: Download build artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: webapp
 
-      # - name: show webapp directory
-      #   run: |
-      #     echo ls
-      #     ls
+      - name: show webapp directory
+        run: |
+          echo ls
+          ls
           
       # deploy web app
       - name: Deploy web app to correct slot
@@ -73,6 +73,7 @@ jobs:
           PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
         run: |
           az login --service-principal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT% 
+          az webapp deployment source config-zip -g %RESOURCE_GROUP% -n %WEB_APP_NAME% --src %PATH_TO_WEBSITE_ZIP% --slot staging
 
         # run: >
         #   powershell -command "& ./deployWebApp.ps1 "
