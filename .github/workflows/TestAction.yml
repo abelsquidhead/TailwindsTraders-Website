@@ -63,7 +63,7 @@ jobs:
           echo ls
           ls
           
-      deploy web app
+      # deploy web app
       - name: Deploy web app to correct slot
         env:
           SERVICE_PRINCIPAL: http://AbelDeployDemoBackupPrincipal
@@ -71,13 +71,15 @@ jobs:
           RESOURCE_GROUP: TailwindTraders-Web-Ignite-RG
           WEB_APP_NAME: abeltailwindstraders
           PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
-        run: >
-          powershell -command "& ./deployWebApp.ps1 "
-          -servicePrincipal %SERVICE_PRINCIPAL% 
-          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
-          -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
-          -resourceGroupName %RESOURCE_GROUP% 
-          -webAppName %WEB_APP_NAME% 
-          -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP% 
+        run: |
+          az login --servicePrincipal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT% 
 
-          
+        # run: >
+        #   powershell -command "& ./deployWebApp.ps1 "
+        #   -servicePrincipal %SERVICE_PRINCIPAL% 
+        #   -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+        #   -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
+        #   -resourceGroupName %RESOURCE_GROUP% 
+        #   -webAppName %WEB_APP_NAME% 
+        #   -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP% 
+
