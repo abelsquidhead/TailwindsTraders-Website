@@ -48,7 +48,7 @@ jobs:
 
 
   deploy:
-    needs: [build] 
+    # needs: [build] 
     runs-on: windows-latest
     steps:
       
