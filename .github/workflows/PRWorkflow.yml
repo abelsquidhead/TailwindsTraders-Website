@@ -52,16 +52,16 @@ jobs:
     runs-on: windows-latest
     steps:
       
-      # download build artifacts
-      - name: Download build artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: webapp
+      # # download build artifacts
+      # - name: Download build artifacts
+      #   uses: actions/download-artifact@master
+      #   with:
+      #     name: webapp
 
-      - name: show webapp directory
-        run: |
-          echo ls
-          ls
+      # - name: show webapp directory
+      #   run: |
+      #     echo ls
+      #     ls
           
       # deploy web app
       - name: Deploy web app to correct slot
