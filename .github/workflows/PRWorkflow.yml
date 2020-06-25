@@ -48,7 +48,7 @@ jobs:
 
 
   deployToStaging:
-    # needs: [build] 
+    needs: [build] 
     runs-on: windows-latest
     steps:
       
