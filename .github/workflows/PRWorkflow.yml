@@ -93,7 +93,7 @@ jobs:
         uses: thollander/actions-comment-pull-request@1.0.0
         with:
           # Message that should be printed in the pull request
-          message: Created staging environment - https://abeltailwindstraders-tailwindstraders-pr-18.azurewebsites.net/
+          message: Created staging environment - https://abeltailwindstraders-tailwindstraders-pr-19.azurewebsites.net/
           # Github token of the repository (automatically created by Github)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
