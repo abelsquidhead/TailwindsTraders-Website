@@ -1,7 +1,7 @@
 name: Tailwind Traders PR Workflow
 on: [pull_request]
 jobs:
-  # run the dacpac-deploy action
+
   createPRWorkItemInAzD:
     runs-on: windows-latest
     steps:
@@ -47,7 +47,7 @@ jobs:
           path: staging
 
 
-  deploy:
+  deployToStaging:
     needs: [build] 
     runs-on: windows-latest
     steps:
@@ -62,8 +62,13 @@ jobs:
         run: |
           echo ls
           ls
-          
-      deploy web app
+
+      - name: Get PR values
+        uses: abelsquidhead/GetPRNameAction@master
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+
+      # deploy web app
       - name: Deploy web app to correct slot
         env:
           SERVICE_PRINCIPAL: http://AbelDeployDemoBackupPrincipal
@@ -71,11 +76,17 @@ jobs:
           RESOURCE_GROUP: TailwindTraders-Web-Ignite-RG
           WEB_APP_NAME: abeltailwindstraders
           PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
-        run: >
-          powershell -command "& ./deployWebApp.ps1 "
-          -servicePrincipal %SERVICE_PRINCIPAL% 
-          -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
-          -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
-          -resourceGroupName %RESOURCE_GROUP% 
-          -webAppName %WEB_APP_NAME% 
-          -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP% 
+        run: |
+          az login --service-principal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT%
+          az webapp deployment slot create --name %WEB_APP_NAME% --resource-group %RESOURCE_GROUP% --slot TailwindsTraders-pr-%PR_NUMBER%
+          az webapp deployment source config-zip -g %RESOURCE_GROUP% -n %WEB_APP_NAME% --src %PATH_TO_WEBSITE_ZIP% --slot TailwindsTraders-pr-%PR_NUMBER%
+
+        # run: >
+        #   powershell -command "& ./deployWebApp.ps1 "
+        #   -servicePrincipal %SERVICE_PRINCIPAL% 
+        #   -servicePrincipalSecret ${{ secrets.SERVICE_PRINCIPAL_SECRET }} 
+        #   -servicePrincipalTenantId %SERVICE_PRINCIPAL_TENANT% 
+        #   -resourceGroupName %RESOURCE_GROUP% 
+        #   -webAppName %WEB_APP_NAME% 
+        #   -pathToWebsiteZip %PATH_TO_WEBSITE_ZIP% 
+
