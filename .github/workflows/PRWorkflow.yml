@@ -69,7 +69,7 @@ jobs:
           myToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: echo pr environment variables
-         env:
+        env:
           PR_URL: what the fuck man
         run: |
           echo %PR_URL%
