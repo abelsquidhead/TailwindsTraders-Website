@@ -68,12 +68,6 @@ jobs:
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: echo pr environment variables
-        run: |
-          echo %PR_URL%
-          echo %PR_TITLE%
-          echo %PR_NUMBER%
-      
       # deploy web app
       - name: Deploy web app to correct slot
         env:
@@ -83,8 +77,9 @@ jobs:
           WEB_APP_NAME: abeltailwindstraders
           PATH_TO_WEBSITE_ZIP: .\Tailwind.Traders.web.zip
         run: |
-          az login --service-principal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT% 
-          az webapp deployment source config-zip -g %RESOURCE_GROUP% -n %WEB_APP_NAME% --src %PATH_TO_WEBSITE_ZIP% --slot staging
+          az login --service-principal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT%
+          az webapp deployment slot create --name %WEB_APP_NAME% --resource-group %RESOURCE_GROUP% --slot TailwindsTraders-pr-%PR_NUMBER%
+          az webapp deployment source config-zip -g %RESOURCE_GROUP% -n %WEB_APP_NAME% --src %PATH_TO_WEBSITE_ZIP% --slot TailwindsTraders-pr-%PR_NUMBER%
 
         # run: >
         #   powershell -command "& ./deployWebApp.ps1 "
