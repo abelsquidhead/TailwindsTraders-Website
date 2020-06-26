@@ -62,7 +62,18 @@ jobs:
         run: |
           echo ls
           ls
-          
+
+      - name: Get PR values
+        uses: abelsquidhead/GetPRNameAction@master
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: echo pr environment variables
+        run: |
+          echo PR_URL: %PR_URL%
+          echo PR_TITLE: %PR_TITLE%
+          echo PR_NUMBER: %PR_NUMBER%
+      
       # deploy web app
       - name: Deploy web app to correct slot
         env:
