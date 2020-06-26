@@ -117,6 +117,5 @@ jobs:
           WEB_APP_NAME: abeltailwindstraders
         run: |
           az login --service-principal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT%
-          az webapp deployment slot create --name %WEB_APP_NAME% --resource-group %RESOURCE_GROUP% --slot TailwindsTraders-pr-%PR_NUMBER%
           az webapp deployment slot delete --name %WEB_APP_NAME% --resource-group %RESOURCE_GROUP% --slot TailwindsTraders-pr-%PR_NUMBER%
 
