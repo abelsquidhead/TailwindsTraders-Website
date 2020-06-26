@@ -69,7 +69,10 @@ jobs:
           myToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: echo pr environment variables
-        run: SET
+        run: |
+          echo %PR_URL%
+          echo %PR_TITLE%
+          echo %PR_NUMBER%
       
       # deploy web app
       - name: Deploy web app to correct slot
