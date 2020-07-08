@@ -4,6 +4,14 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
     - master
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'The Azure DevOps Services Project name'     
+        required: true
+        default: 'ADO20ELPDemo'
+      tags:
+        description: 'Test workflow dispatch tags'  
 jobs:
   createPRWorkItemInAzD:
     if: (github.event_name == 'pull_request' && github.event.action != 'closed')
