@@ -126,7 +126,8 @@ jobs:
       - name: Get PR values
         uses: abelsquidhead/GetPRNameAction@master
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+        id: getPRValuesStep
 
       # delete staging slot
       - name: Delete staging slot
@@ -137,7 +138,6 @@ jobs:
           WEB_APP_NAME: abeltailwindstraders
         run: |
           az login --service-principal --username %SERVICE_PRINCIPAL% --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant %SERVICE_PRINCIPAL_TENANT%
-          az webapp deployment slot delete --name %WEB_APP_NAME% --resource-group %RESOURCE_GROUP% --slot TailwindsTraders-pr-%PR_NUMBER%
-
+          az webapp deployment slot delete --name %WEB_APP_NAME% --resource-group %RESOURCE_GROUP% --slot TailwindsTraders-pr- ${{ steps.getPRValuesStep.outputs.number}}
 
 
