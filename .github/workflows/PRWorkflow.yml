@@ -82,7 +82,7 @@ jobs:
 
       # get values of the PR and store in env var
       - name: Get PR values
-        uses: abelsquidhead/GetPRInfoAction@master
+        uses: abelsquidhead/GetPRNameAction@master
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
         id: getPRValues
