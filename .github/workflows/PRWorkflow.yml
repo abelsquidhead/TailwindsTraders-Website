@@ -26,11 +26,6 @@ jobs:
         myInput: "This is my input!!!"
         myToken: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Test Out Get Pr Info
-      uses: abelsquidhead/GetPRInfoAction@master
-      with:
-        milliseconds: 10
-  
   build:
     if: (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: windows-latest
