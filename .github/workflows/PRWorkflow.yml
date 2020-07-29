@@ -25,11 +25,6 @@ jobs:
       with:
         myInput: "This is my input!!!"
         myToken: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Test Out Get Pr Info
-      uses: abelsquidhead/GetPRInfoAction@master
-      with:
-        milliseconds: 10
   
   build:
     if: (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -89,7 +84,7 @@ jobs:
       - name: Get PR values
         uses: abelsquidhead/GetPRNameAction@master
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
         id: getPRValues
 
       # deploy web app
