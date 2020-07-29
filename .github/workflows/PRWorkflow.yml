@@ -85,6 +85,7 @@ jobs:
         uses: abelsquidhead/GetPRInfoAction@master
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
+        id: getPRValues
 
       # deploy web app
       - name: Deploy web app to correct slot
