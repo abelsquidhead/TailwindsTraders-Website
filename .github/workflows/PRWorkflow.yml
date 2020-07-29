@@ -85,7 +85,7 @@ jobs:
         uses: abelsquidhead/GetPRNameAction@master
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-        id: getPRValues
+        id: getPRValuesStep
 
       # deploy web app
       - name: Deploy web app to correct slot
@@ -106,6 +106,14 @@ jobs:
         with:
           # Message that should be printed in the pull request
           message: Created staging environment - https://abeltailwindstraders-tailwindstraders-pr-${{ env.PR_NUMBER }}.azurewebsites.net/
+          # Github token of the repository (automatically created by Github)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Testing Output Var
+        uses: thollander/actions-comment-pull-request@1.0.0
+        with:
+          # Message that should be printed in the pull request
+          message: The pull request number is ${{ steps.getPRValuesStep.outputs.number}}
           # Github token of the repository (automatically created by Github)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
