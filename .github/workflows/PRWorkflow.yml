@@ -98,22 +98,14 @@ jobs:
         run: |
           az login --service-principal --username ${SERVICE_PRINCIPAL} --password ${{ secrets.SERVICE_PRINCIPAL_SECRET }} --tenant ${SERVICE_PRINCIPAL_TENANT}
           az webapp deployment slot create --name ${WEB_APP_NAME} --resource-group ${RESOURCE_GROUP} --slot TailwindsTraders-pr-${PR_NUMBER}
-          az webapp deployment source config-zip -g ${RESOURCE_GROUP} -n ${WEB_APP_NAME} --src ${PATH_TO_WEBSITE_ZIP} --slot TailwindsTraders-pr-${PR_NUMBER}
+          az webapp deployment source config-zip -g ${RESOURCE_GROUP} -n ${WEB_APP_NAME} --src ${PATH_TO_WEBSITE_ZIP} --slot TailwindsTraders-pr-${{ steps.getPRValuesStep.outputs.number}}
 
       # comment url of staging environment back to PR
       - name: Comment Pull Request
         uses: thollander/actions-comment-pull-request@1.0.0
         with:
           # Message that should be printed in the pull request
-          message: Created staging environment - https://abeltailwindstraders-tailwindstraders-pr-${{ env.PR_NUMBER }}.azurewebsites.net/
-          # Github token of the repository (automatically created by Github)
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Testing Output Var
-        uses: thollander/actions-comment-pull-request@1.0.0
-        with:
-          # Message that should be printed in the pull request
-          message: The pull request number is ${{ steps.getPRValuesStep.outputs.number}}
+          message: Created staging environment - https://abeltailwindstraders-tailwindstraders-pr-${{ steps.getPRValuesStep.outputs.number}}.azurewebsites.net/
           # Github token of the repository (automatically created by Github)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
