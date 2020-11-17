@@ -37,7 +37,7 @@ jobs:
         
     # setup nuget
     - name: Setup nuget
-      uses: warrenbuckley/Setup-Nuget@v1
+      uses: warrenbuckley/Setup-Nuget@master
         
     # copy zip to staging
     - name: Build solution
@@ -102,7 +102,7 @@ jobs:
 
       # comment url of staging environment back to PR
       - name: Comment Pull Request
-        uses: thollander/actions-comment-pull-request@1.0.0
+        uses: thollander/actions-comment-pull-request@master
         with:
           # Message that should be printed in the pull request
           message: Created staging environment - https://abeltailwindstraders-tailwindstraders-pr-${{ steps.getPRValuesStep.outputs.number}}.azurewebsites.net/
