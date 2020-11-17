@@ -78,6 +78,8 @@ jobs:
 
       # get values of the PR and store in env var
       - name: Get PR values
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
         uses: abelsquidhead/GetPRInfoAction@main
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
