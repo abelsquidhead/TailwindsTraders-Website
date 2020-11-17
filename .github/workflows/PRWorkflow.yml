@@ -35,10 +35,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v1
         
-    # setup nuget
-    - name: Setup nuget
-      uses: warrenbuckley/Setup-Nuget@v1
-        
     # copy zip to staging
     - name: Build solution
       run: |
