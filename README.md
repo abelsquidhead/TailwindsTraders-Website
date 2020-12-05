@@ -21,7 +21,7 @@ For this demo reference, we built several consumer and line-of-business applicat
 
 With the following ARM template you can automate the creation of the resources for this website.
 
-[![Deploy to Azure](Documents/Images/deploy-to-azure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FTailwindTraders-Website%2Fmaster%2FDeploy%2Fdeployment.json)
+[![Deploy to Azure](Documents/Images/deploy-to-azure.png)](https://portal.azure.com/?WT.mc_id=dotnet-0000-abewan#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoft%2FTailwindTraders-Website%2Fmaster%2FDeploy%2Fdeployment.json)
 
 When you deploy this website to Azure you can define the [Backend](https://github.com/Microsoft/TailwindTraders-Backend) you want to use in case you have deploy your own backend. By defaults it is configured the public Backend environment provided by Microsoft.
 
@@ -124,12 +124,12 @@ If you select the [Hard Hat](Documents/Images/TestImages/hard_hat.jpg) should be
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+the rights to use your contribution. For details, visit https://cla.microsoft.com/?WT.mc_id=dotnet-0000-abewan.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/?WT.mc_id=dotnet-0000-abewan).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/?WT.mc_id=dotnet-0000-abewan) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
